@@ -44,12 +44,11 @@ Installation
 Follow the steps below to set up the project on your local machine.
 1. Clone the Repository
 
-bash
 
-git clone https://github.com/yourusername/quantconnect-algorithm-generator.git
-cd quantconnect-algorithm-generator
 
-Replace yourusername with your actual GitHub username.
+git clone https://github.com/SL-Mar/Article_to_Code.git
+cd Article_to_Code
+
 2. Install Python
 
 Ensure that Python 3.6 or higher is installed on your system.
