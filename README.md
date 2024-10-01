@@ -1,6 +1,6 @@
-QuantConnect Algorithm Generator from Quantitative Finance Articles
+# QuantConnect Algorithm Generator from Quantitative Finance Articles
 
-Table of Contents
+## Table of Contents
 
     Introduction
     Features
@@ -16,7 +16,7 @@ Table of Contents
     Contributing
     License
 
-Introduction
+## Introduction
 
 The QuantConnect Algorithm Generator is a Python-based tool designed to streamline the process of converting quantitative finance research articles into actionable trading algorithms compatible with QuantConnect. By leveraging Natural Language Processing (NLP) and OpenAI's powerful language models, this tool automates the extraction of trading strategies and risk management techniques from PDF articles, summarizes the findings, and generates ready-to-use QuantConnect Python code with proper syntax highlighting.
 Features
@@ -30,7 +30,7 @@ Features
     GUI Display: Presents the article summary and generated code in separate, user-friendly Tkinter windows with syntax highlighting powered by Pygments.
     Error Handling & Validation: Validates generated code for syntax errors and refines it if necessary.
 
-Prerequisites
+## Prerequisites
 
 Before setting up the project, ensure you have the following:
 
@@ -39,17 +39,16 @@ Before setting up the project, ensure you have the following:
     OpenAI API Key: Access to OpenAI's API for generating summaries and code.
     Tkinter: Standard GUI library for Python (usually included by default).
 
-Installation
+## Installation
 
 Follow the steps below to set up the project on your local machine.
-1. Clone the Repository
 
-
+### 1. Clone the Repository
 
 git clone https://github.com/SL-Mar/Article_to_Code.git
 cd Article_to_Code
 
-2. Install Python
+### 2. Install Python
 
 Ensure that Python 3.6 or higher is installed on your system.
 
@@ -73,7 +72,7 @@ bash
         sudo apt-get update
         sudo apt-get install python3 python3-pip
 
-3. Install Dependencies
+### 3. Install Dependencies
 
 Note: tkinter is part of Python's standard library and typically doesn't require separate installation. However, if it's missing, refer to the Troubleshooting section.
 
@@ -109,7 +108,7 @@ bash
 
     pip install pygments pdfplumber spacy openai python-dotenv
 
-4. Download SpaCy Model
+### 4. Download SpaCy Model
 
 The project utilizes SpaCy's English model for NLP tasks.
 
@@ -117,7 +116,7 @@ bash
 
 python -m spacy download en_core_web_sm
 
-5. Setup Environment Variables
+### 5. Setup Environment Variables
 
 Create a .env file in the project root directory to securely store your OpenAI API key.
 
@@ -217,7 +216,7 @@ Other Common Issues
         Check the console or log output for error messages.
         Ensure that the PDF provided is not corrupted and follows standard formatting.
 
-Contributing
+## Contributing
 
 Contributions are welcome! Follow these steps to contribute:
 
