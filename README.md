@@ -1,185 +1,186 @@
-# QuantConnect Algorithm Generator from Quantitative Finance Articles
+# 🛠️ Algorithms Generation from Quantitative Finance Articles to QuantConnect  🚀 
+
+![License](https://img.shields.io/badge/License-MIT-blue.svg)
+![Python Version](https://img.shields.io/badge/Python-3.8%2B-blue.svg)
+![OpenAI](https://img.shields.io/badge/OpenAI-GPT4-brightgreen.svg)
+
+Coder is a Python-based tool designed to convert quantitative finance research articles into actionable trading algorithms compatible with [QuantConnect](https://www.quantconnect.com/). By utilizing Natural Language Processing (NLP) and OpenAI's language models, this tool automates the extraction of trading strategies and risk management techniques from PDF articles, summarizes the findings, and generates ready-to-use QuantConnect Python code with proper syntax highlighting.
 
 ## Table of Contents
 
-    Introduction
-    Features
-    Prerequisites
-    Installation
-        1. Clone the Repository
-        2. Install Python
-        3. Install Dependencies
-        4. Download SpaCy Model
-        5. Setup Environment Variables
-    Usage
-    Troubleshooting
-    Contributing
-    License
+- [Introduction](#introduction)
+- [Features](#features)
+- [Installation](#installation)
+  - [Prerequisites](#prerequisites)
+  - [Step-by-Step Installation](#step-by-step-installation)
+- [Usage](#usage)
+  - [Running the Application](#running-the-application)
+  - [GUI Interaction](#gui-interaction)
+- [Configuration](#configuration)
+  - [Environment Variables](#environment-variables)
+  - [Refinement Attempts](#refinement-attempts)
+- [Dependencies](#dependencies)
+- [Contributing](#contributing)
+- [License](#license)
+- [Acknowledgements](#acknowledgements)
+- [Contact](#contact)
 
 ## Introduction
 
-The QuantConnect Algorithm Generator is a Python-based tool designed to streamline the process of converting quantitative finance research articles into actionable trading algorithms compatible with QuantConnect. By leveraging Natural Language Processing (NLP) and OpenAI's powerful language models, this tool automates the extraction of trading strategies and risk management techniques from PDF articles, summarizes the findings, and generates ready-to-use QuantConnect Python code with proper syntax highlighting.
-Features
+This script streamlines the process of transforming quantitative finance research into executable trading algorithms. By automating text extraction, preprocessing, and analysis from PDF documents, the tool facilitates the efficient development of trading strategies within the QuantConnect environment. This automation reduces manual effort, minimizes errors, and accelerates the implementation of complex financial models.
 
-PDF Text Extraction: Accurately extracts text from complex PDF structures using pdfplumber.
-Text Preprocessing: Cleans extracted text by removing URLs, headers, footers, and irrelevant content.
-Heading Detection: Identifies section headings using SpaCy's NLP capabilities.
-Keyword Analysis: Categorizes sentences into trading signals and risk management based on predefined keywords.
-Article Summarization: Generates concise summaries of extracted strategies and risk management techniques using OpenAI's GPT-4.
-QuantConnect Code Generation: Automatically generates QuantConnect-compatible Python algorithms based on the extracted data.
-GUI Display: Presents the article summary and generated code in separate, user-friendly Tkinter windows with syntax highlighting powered by Pygments.
-Error Handling & Validation: Validates generated code for syntax errors and refines it if necessary.
+## Features
 
-## Prerequisites
-
-Before setting up the project, ensure you have the following:
-
-Operating System: Windows, macOS, or Linux.
-Python Version: Python 3.6 or higher.
-OpenAI API Key: Access to OpenAI's API for generating summaries and code.
-Tkinter: Standard GUI library for Python (usually included by default).
+- **PDF Text Extraction**: Utilizes `pdfplumber` to accurately extract text from complex PDF structures.
+  
+- **Text Preprocessing**: Cleans extracted text by removing URLs, headers, footers, and irrelevant content.
+  
+- **Heading Detection**: Identifies section headings using SpaCy's NLP capabilities for structured content organization.
+  
+- **Keyword Analysis**: Categorizes sentences into trading signals and risk management based on predefined keywords.
+  
+- **Article Summarization**: Generates concise summaries of extracted strategies and risk management techniques using OpenAI's GPT-4.
+  
+- **QuantConnect Code Generation**: Automatically generates QuantConnect-compatible Python algorithms based on the extracted data.
+  
+- **GUI Display**: Presents the article summary and generated code in separate Tkinter windows with syntax highlighting powered by Pygments.
+  
+- **Error Handling & Validation**: Validates generated code for syntax errors and refines it automatically if necessary.
 
 ## Installation
 
-Follow the steps below to set up the project on your local machine.
+### Prerequisites
 
-### 1. Clone the Repository
+- **Python 3.8 or Higher**: Ensure Python is installed on your system. [Download Python](https://www.python.org/downloads/)
+  
+- **OpenAI API Key**: Obtain an API key from [OpenAI](https://platform.openai.com/account/api-keys) to enable AI-driven functionalities.
 
+### Step-by-Step Installation
+
+1. **Clone the Repository**
+```bash
 git clone https://github.com/SL-Mar/Article_to_Code.git
 cd Article_to_Code
+```
+2. **Create a Virtual Environment**
+   
+It's recommended to use a virtual environment to manage dependencies.
+```bash
+python -m venv venv
+```
 
-### 2. Install Python
+3. **Activate the Virtual Environment**
 
-Ensure that Python 3.6 or higher is installed on your system.
+For macOS/Linux:
+```bash
+source venv/bin/activate
+```
 
-### 3. Install Dependencies
+For Windows:
+```bash
+venv\Scripts\activate
+```
+    
+4. **Install Dependencies**
+```bash
+pip install -r requirements.txt
+```
 
-Note: tkinter is part of Python's standard library and typically doesn't require separate installation. However, if it's missing, refer to the Troubleshooting section.
-
-Create a Virtual Environment (Optional but Recommended):
-
- python -m venv env
-
-Activate the Virtual Environment:
-
-On Windows, by env\Scripts\activate
-
-On macOS/Linux, type source env/bin/activate
-
-Install Required Python Packages:
-
-pip install pygments pdfplumber spacy openai python-dotenv
-
-### 4. Download SpaCy Model
-
-The project utilizes SpaCy's English model for NLP tasks.
-
+5. **Download spaCy Model**
+```bash
 python -m spacy download en_core_web_sm
+```
 
-### 5. Setup Environment Variables
+6. **Configure Environment Variables**
 
-Create a .env file in the project root directory to securely store your OpenAI API key.
+Create a .env file in the root directory and add your OpenAI API key:
+```bash
+echo "OPENAI_API_KEY=your_openai_api_key_here" > .env
+echo "LOG_LEVEL=INFO" >> .env
+```
 
-Add Your OpenAI API Key:
+## Usage
 
-Open the .env file in a text editor and add:
+### Running the application
 
-env
+Execute the main script with the path to your PDF article as an argument:
+```bash
+python article_to_code.py path/to/your/article.pdf
+```
 
-    OPENAI_API_KEY=your_openai_api_key_here
+### GUI Interaction
 
-    Replace your_openai_api_key_here with your actual OpenAI API key.
+1. Load PDF: The application processes the specified PDF, extracting and analyzing its content.
+2. View Summary: A concise summary of the trading strategy and risk management sections is displayed.
+3. Review Generated Code: The corresponding QuantConnect Python code is showcased with syntax highlighting.
+4. Copy and Save: Use the provided buttons to copy the summary or code to your clipboard or save the code to a file.
 
-Usage
+## Configuration
 
-Prepare Your PDF Article:
+### Environment Variables:
 
-Ensure your quantitative finance article is in PDF format. Place it in the project directory or note its path.
++ OPENAI_API_KEY: Your OpenAI API key for accessing GPT-4 functionalities.
++ LOG_LEVEL: Set the logging level (e.g., DEBUG, INFO, WARNING, ERROR). Default is INFO.
 
-Run the Script
+### Refinement Attempts:
 
-Interact with the GUI:
-        Summary Window: Displays a concise summary of the article's trading strategies and risk management techniques.
-        Code Window: Shows the generated QuantConnect Python algorithm with syntax highlighting for easy reading and verification.
+By default, the application attempts to refine the generated code up to 3 times if syntax errors are detected. You can adjust this by modifying the max_refine_attempts parameter in the ArticleProcessor class.
 
-Review and Utilize the Generated Code:
-        Copy the code from the GUI and integrate it into your QuantConnect projects.
-        Optionally, use the QuantConnect Lean CLI to validate and test the generated algorithms locally before deployment.
+## Dependencies
 
-Troubleshooting
-tkinter Not Found
+The project relies on several external libraries. All dependencies are listed in the requirements.txt file.
 
-If you encounter errors related to tkinter (e.g., No module named tkinter), follow these steps based on your operating system:
-
-Windows:
-        Reinstall Python and ensure that the "tcl/tk and IDLE" option is selected during installation.
-MacOS:
-        Reinstall Python using the official installer from python.org.
-Linux:
-        Install tkinter using your distribution's package manager.
-
-        Debian/Ubuntu:
-
-        sudo apt-get update
-        sudo apt-get install python3-tk
-
-        Fedora:
-        
-        sudo dnf install python3-tkinter
-
-        Arch Linux:
-
-        sudo pacman -S tk
-
-OpenAI API Issues
-
-    Invalid API Key:
-        Ensure that your OPENAI_API_KEY in the .env file is correct.
-    Rate Limits Exceeded:
-        Check your OpenAI dashboard for usage statistics and consider upgrading your plan if necessary.
-    Network Issues:
-        Ensure you have a stable internet connection.
-
-Other Common Issues
-
-    Missing Dependencies:
-        Verify that all required Python packages are installed. Reinstall if necessary.
-
-    SpaCy Model Not Found:
-
-        Ensure you've downloaded the SpaCy model using:
-
-        python -m spacy download en_core_web_sm
-
-    Script Crashes or Doesn't Display Code:
-        Check the console or log output for error messages.
-        Ensure that the PDF provided is not corrupted and follows standard formatting.
+1. pdfplumber
+2. spaCy
+3. openai
+4. python-dotenv
+5. tkinter
+6. pygments
 
 ## Contributing
 
-Contributions are welcome! Follow these steps to contribute:
+Contributions are welcome! Please follow these steps to contribute : 
 
-    Fork the Repository.
+1. Fork the Repository
+2. Create a New Branch
+```bash
+git checkout -b feature/YourFeatureName
+```
+3. Commit Your Changes
+```bash
+git commit -m "Add feature: YourFeatureName"
+```
+4. Push to the Branch   
+```bash
+git push origin feature/YourFeatureName
+```
+5. Open a Pull Request
 
-    Create a New Branch:
-
-    git checkout -b feature/YourFeatureName
-
-    Commit Your Changes:
-
-    git commit -m "Add some feature"
-
-    Push to the Branch:
-
-    git push origin feature/YourFeatureName
-
-    Open a Pull Request.
-
-    Please ensure that your contributions adhere to the project's coding standards and include relevant tests and documentation.
+Provide a clear description of the changes and the problem they address.
 
 ## License
 
-This project is licensed under the MIT License.
+This project is licensed under the MIT License. You are free to use, modify, and distribute this software. See the LICENSE file for more details.
 
-Disclaimer: This tool leverages OpenAI's GPT-4 model to generate code based on the content of quantitative finance articles. While it strives for accuracy, always review and validate the generated algorithms before deploying them in live trading environments.
+## Acknowledgements
+
++ QuantConnect as the backtest and trading platform
++ pdfplumber for efficient PDF text extraction.
++ spaCy for powerful natural language processing capabilities.
++ OpenAI for providing the GPT-4 model used in AI-driven summarization and code generation.
++ Tkinter for the graphical user interface framework.
++ Pygments for syntax highlighting in the GUI.
+
+## Contact
+- **LinkedIn**: S.M. LAIGNEL [![LinkedIn](https://img.shields.io/badge/LinkedIn-0077B5?style=for-the-badge&logo=linkedin&logoColor=white)](https://www.linkedin.com/in/smrlaignel/)
+
+
+
+
+
+
+
+
+
+
 
