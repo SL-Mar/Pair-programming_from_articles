@@ -27,7 +27,7 @@ Coder is a Python-based tool designed to convert quantitative finance research a
 
 ## Introduction and limitations
 
-This script streamlines the process of transforming quantitative finance research into executable trading algorithms. By automating text extraction, preprocessing, and analysis from PDF documents, the tool facilitates the efficient development of trading strategies within the QuantConnect environment. This automation reduces manual effort, minimizes errors, and accelerates the implementation of complex financial models. Generated code is not warranted error-free. Minor corrections may be required using MIA (built-in QuantConnect AI) or debugging. 
+This script streamlines the process of transforming quantitative finance research into executable trading algorithms. By automating text extraction, preprocessing, and analysis from PDF documents, the tool facilitates the efficient development of trading strategies within the QuantConnect environment. This automation reduces manual effort, minimizes errors, and accelerates the implementation of complex financial models. Generated code is not warranted error-free. Minor corrections may be required using MIA (built-in QuantConnect AI) or debugging. LLM pair-coding is an evolving field and performance should improve over time. 
 
 ## Features
 
@@ -172,6 +172,7 @@ This project is licensed under the MIT License. You are free to use, modify, and
 + Pygments for syntax highlighting in the GUI.
 
 ## Contact
+- **Medium**: S.M. LAIGNEL [![Read on Medium](https://img.shields.io/badge/Read_on-Medium-00ab6c?style=for-the-badge&logo=medium&logoColor=white)](https://medium.com/ai-advances/from-finance-papers-to-trading-algorithms-an-automated-approach-ccd2180ee306)
 - **LinkedIn**: S.M. LAIGNEL [![LinkedIn](https://img.shields.io/badge/LinkedIn-0077B5?style=for-the-badge&logo=linkedin&logoColor=white)](https://www.linkedin.com/in/smrlaignel/)
 
 
