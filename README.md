@@ -8,7 +8,7 @@ Coder is a Python-based tool designed to convert quantitative finance research a
 
 ## Table of Contents
 
-- [Introduction](#introduction)
+- [Introduction and limitations](#introduction-and-limitations)
 - [Features](#features)
 - [Installation](#installation)
   - [Prerequisites](#prerequisites)
@@ -25,9 +25,9 @@ Coder is a Python-based tool designed to convert quantitative finance research a
 - [Acknowledgements](#acknowledgements)
 - [Contact](#contact)
 
-## Introduction
+## Introduction and limitations
 
-This script streamlines the process of transforming quantitative finance research into executable trading algorithms. By automating text extraction, preprocessing, and analysis from PDF documents, the tool facilitates the efficient development of trading strategies within the QuantConnect environment. This automation reduces manual effort, minimizes errors, and accelerates the implementation of complex financial models.
+This script streamlines the process of transforming quantitative finance research into executable trading algorithms. By automating text extraction, preprocessing, and analysis from PDF documents, the tool facilitates the efficient development of trading strategies within the QuantConnect environment. This automation reduces manual effort, minimizes errors, and accelerates the implementation of complex financial models. Generated code is not warranted error-free. Minor corrections may be required using MIA (built-in QuantConnect AI) or debugging. 
 
 ## Features
 
