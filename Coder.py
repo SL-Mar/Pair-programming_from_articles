@@ -2,7 +2,7 @@
 Article to Code 
 ===============
 
-Author: Sebastien M. LAIGNEL - Version 3 October 2024
+Author: Sebastien M. LAIGNEL - Version 4 October 2024
 
 Description:
 ------------
@@ -234,7 +234,7 @@ class KeywordAnalyzer:
 class OpenAIHandler:
     """Handles interactions with the OpenAI API."""
 
-    def __init__(self, model: str = "gpt-4o-latest"):
+    def __init__(self, model: str = "gpt-4o"):
         self.logger = logging.getLogger(self.__class__.__name__)
         self.model = model
 
@@ -246,16 +246,21 @@ class OpenAIHandler:
         trading_signals = '\n'.join(extracted_data.get('trading_signal', []))
         risk_management = '\n'.join(extracted_data.get('risk_management', []))
 
-        prompt = f"""
-        Summarize the following trading strategy and risk management details in clear and concise language.
+        prompt = f"""Provide a clear and concise summary of the following trading strategy and its associated risk management rules. Ensure the explanation is understandable to traders familiar with basic trading concepts and is no longer than 300 words.
 
-        ### Trading Strategy:
+        ### Trading Strategy Overview:
+        - Core Strategy: Describe the primary trading approach, including any specific indicators, time frames (e.g., 5-minute), and entry/exit rules.
+        - Stock Selection: Highlight any stock filters (e.g., liquidity, trading volume thresholds, or price conditions) used to choose which stocks to trade.
+        - Trade Signals: Explain how the strategy determines whether to go long or short, including any conditions based on candlestick patterns or breakouts.
         {trading_signals}
 
-        ### Risk Management:
+        ### Risk Management Rules:
+        - Stop Loss: Describe how stop-loss levels are set (e.g., 10% ATR) and explain the position-sizing rules (e.g., 1% of capital at risk per trade).
+        - Exit Conditions: Clarify how and when positions are closed (e.g., at the end of the trading day or if certain price targets are hit).
+        - Additional Constraints: Mention any leverage limits or other risk controls (e.g., maximum leverage of 4x, focusing on Stocks in Play).
         {risk_management}
 
-        The summary should be no more than 300 words.
+        Summarize the details in a practical and structured format.
         """
 
         try:
@@ -311,22 +316,128 @@ class OpenAIHandler:
             - Use only QuantConnect's supported indicators and methods.
             - The code must be syntactically correct and free of errors.
 
-        ### Example Structure:
+        ### Example of an algorithm to showcase the program structure:
         ```python
         from AlgorithmImports import *
 
-        class MyAlgorithm(QCAlgorithm):
+        class PennyStocksAlgorithm(QCAlgorithm):
             def Initialize(self):
-                self.SetStartDate(2020, 1, 1)
-                self.SetEndDate(2023, 1, 1)
-                self.SetCash(100000)
-                # Define universe, indicators, etc.
+                self.SetStartDate(2024, 1, 1)   # Set Start Date
+                self.SetCash(11_700)            # Set Strategy Cash
+
+                self.SetSecurityInitializer(BrokerageModelSecurityInitializer(
+                    self.BrokerageModel, FuncSecuritySeeder(self.GetLastKnownPrices)
+                ))
+                #self.set_benchmark('SPY')    
+                self.UniverseSettings.Resolution = Resolution.Daily
+
+                self.momentum_indicators = []    # List of Momentum indicators keyed by Symbol
+                self.lookback_period = 252       # Momentum indicator lookback period
+                self.num_coarse = 500            # Number of symbols selected at Coarse Selection
+                self.num_fine = 20               # Number of symbols selected at Fine Selection
+                self.num_long = 10               # Number of symbols with open positions
+
+                self.current_month = -1
+                self.rebalance_flag = True
+                # Define your list of specific tickers
+                tickers = ["POWL", "WF", "GRBK", "MHO", "APP","ET",'BRKB']
+
+                # Add the tickers to the manual universe
+                self.AddUniverseSelection(ManualUniverseSelectionModel(tickers))
+                self.AddUniverse(self.CoarseSelectionFunction, self.FineSelectionFunction)
+
+            def CoarseSelectionFunction(self, coarse):
+                '''Drop securities which have no fundamental data'''
+
+                if self.current_month == self.Time.month:
+                    return Universe.Unchanged
+
+                self.rebalance_flag = True
+                self.current_month = self.Time.month
+
+                # Filter and sort in a single step
+                selected = sorted(
+                    [x for x in coarse if x.HasFundamentalData and x.Price > 1 and 5e9 < x.MarketCap < 10e9],
+                    key=lambda x: x.DollarVolume, 
+                    reverse=True
+                )
+
+                return [x.Symbol for x in selected[:self.num_coarse]]
+
+            def FineSelectionFunction(self, fine):
+                '''Select securities with highest market cap'''
+                selected = sorted(fine, key=lambda f: f.MarketCap, reverse=True)
+                return [x.Symbol for x in selected[:self.num_fine]]
 
             def OnData(self, data):
-                # Trading logic
+                # Update the indicators
+                for symbol, momentum in self.momentum_indicators.items():
+                    if symbol in data and data[symbol] is not None:
+                        momentum.Update(self.Time, data[symbol].Close)
 
-            def OnEndOfDay(self):
-                # Risk management
+                if not self.rebalance_flag:
+                    return
+
+                # Select securities with highest momentum
+                sorted_momentum = sorted(
+                    [k for k, v in self.momentum_indicators.items() if v.IsReady],
+                    key=lambda x: self.momentum_indicators[x].Current.Value, 
+                    reverse=True
+                )
+                selected = sorted_momentum[:self.num_long]
+
+                # Liquidate securities that are not in the selected list
+                for symbol in list(self.Portfolio.Keys):
+                    if symbol not in selected:
+                        self.Liquidate(symbol, 'Not selected')
+
+                # Buy selected securities with pyramiding logic
+                initial_investment = 1000
+                additional_investment = 500
+
+                for symbol in selected:
+                    if symbol in data and data[symbol] is not None:  # Check if data for the symbol is available
+                        current_investment = self.Portfolio[symbol].Invested
+                        if current_investment:
+                            # If already invested, add additional investment
+                            self.MarketOrder(symbol, additional_investment / data[symbol].Close)
+                        else:
+                            # Initial investment
+                            self.MarketOrder(symbol, initial_investment / data[symbol].Close)
+
+                            # Uncomment these lines if you want to set take profit and stop loss orders
+                            # take_profit_price = data[symbol].Close * 1.01
+                            # stop_loss_price = data[symbol].Close * 0.98
+                            # self.LimitOrder(symbol, -self.Portfolio[symbol].Quantity, take_profit_price)
+                            # self.StopMarketOrder(symbol, -self.Portfolio[symbol].Quantity, stop_loss_price)
+
+                self.rebalance_flag = False
+
+            def OnSecuritiesChanged(self, changes):
+                # Clean up data for removed securities and Liquidate
+                for security in changes.RemovedSecurities:
+                    symbol = security.Symbol
+                    if symbol in self.momentum_indicators:
+                        self.momentum_indicators.pop(symbol)
+                        self.Liquidate(symbol, 'Removed from universe')
+
+                for security in changes.AddedSecurities:
+                    if security.Symbol not in self.momentum_indicators:
+                        self.momentum_indicators[security.Symbol] = MomentumPercent(self.lookback_period)
+
+                # Warm up the indicator with historical prices if it is not ready
+                added_symbols = [k for k, v in self.momentum_indicators.items() if not v.IsReady]
+
+                if added_symbols:
+                    history = self.History(added_symbols, 1 + self.lookback_period, Resolution.Daily)
+                    
+                    for symbol in added_symbols:
+                        ticker = symbol.ID.ToString()
+                        if ticker in history.index.levels[0]:
+                            symbol_history = history.loc[ticker]
+                            for time, value in symbol_history['close'].dropna().items():
+                                item = IndicatorDataPoint(symbol, time, value)
+                                self.momentum_indicators[symbol].Update(item)
         ```
 
         ### Generated Code:
@@ -604,14 +715,14 @@ class GUI:
 class ArticleProcessor:
     """Main processor that orchestrates the PDF processing, analysis, and code generation."""
 
-    def __init__(self, max_refine_attempts: int = 3):
+    def __init__(self, max_refine_attempts: int = 2):
         self.logger = logging.getLogger(self.__class__.__name__)
         self.pdf_loader = PDFLoader()
         self.preprocessor = TextPreprocessor()
         self.heading_detector = HeadingDetector()
         self.section_splitter = SectionSplitter()
         self.keyword_analyzer = KeywordAnalyzer()
-        self.openai_handler = OpenAIHandler(model="gpt-4")  # Specify the model here
+        self.openai_handler = OpenAIHandler(model="gpt-4o")  # Specify the model here
         self.code_validator = CodeValidator()
         self.code_refiner = CodeRefiner(self.openai_handler)
         self.gui = GUI()
