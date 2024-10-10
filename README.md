@@ -17,7 +17,15 @@ Detailed installation instructions will be provided once the CLI is fully set up
 
 ## Usage
 
-Examples of how to use the CLI commands.
+To launch the interactive mode of **QuantCLI**, follow these steps:
+
+1. Open a terminal window (bash shell).
+2. Navigate to the directory where `quantcli` is installed.
+3. Type the following command and press `Enter`:
+
+   ```bash
+   quantcli interactive
+ 
 
 ## License
 
