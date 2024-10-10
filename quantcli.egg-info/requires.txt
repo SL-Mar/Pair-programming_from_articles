@@ -1,0 +1,8 @@
+Click
+requests
+pdfplumber
+spacy
+openai
+python-dotenv
+pygments
+InquirerPy

@@ -1,0 +1,2 @@
+[console_scripts]
+quantcli = quantcli.cli:cli

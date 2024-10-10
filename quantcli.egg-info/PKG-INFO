@@ -1,0 +1,45 @@
+Metadata-Version: 2.1
+Name: quantcli
+Version: 1.0.0
+Summary: A CLI tool for generating QuantConnect algorithms from research articles.
+Home-page: https://github.com/yourusername/quantcli
+Author: SL-MAR
+Author-email: your.email@example.com
+Classifier: Programming Language :: Python :: 3
+Classifier: License :: OSI Approved :: MIT License
+Classifier: Operating System :: OS Independent
+Description-Content-Type: text/markdown
+Requires-Dist: Click
+Requires-Dist: requests
+Requires-Dist: pdfplumber
+Requires-Dist: spacy
+Requires-Dist: openai
+Requires-Dist: python-dotenv
+Requires-Dist: pygments
+Requires-Dist: InquirerPy
+
+# QuantCLI
+
+QuantCLI is a Command-Line Interface (CLI) tool designed to streamline the process of searching for research articles, downloading PDFs, summarizing content, and generating QuantConnect Python algorithms based on the extracted data.
+
+## Features
+
+- **Search Articles**: Query the CrossRef API to find relevant journal articles.
+- **List Articles**: View previously searched articles.
+- **Download PDFs**: Download article PDFs using direct links or Unpaywall.
+- **Summarize Articles**: Generate concise summaries of downloaded articles.
+- **Generate QuantConnect Code**: Create QuantConnect Python algorithms based on article summaries.
+- **Interactive Mode**: Perform all steps interactively with guided prompts.
+
+## Installation
+
+Detailed installation instructions will be provided once the CLI is fully set up.
+
+## Usage
+
+Examples of how to use the CLI commands.
+
+## License
+
+This project is licensed under the MIT License. See the [LICENSE](LICENSE) file for details.
+
