@@ -21,7 +21,7 @@ logger = logging.getLogger(__name__)
 class QuantCLIGUI:
     def __init__(self, master):
         self.master = master
-        master.title("Quant Coder v1.0 - SL Mar 2024")
+        master.title("Quant Coder v0.3 - SL Mar 2024")
         master.geometry("800x600")
 
         self.label = tk.Label(master, text="Quantitative research from articles", font=("Helvetica", 16))
