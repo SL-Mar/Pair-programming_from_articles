@@ -1,4 +1,4 @@
-# QuantCoder v1.0
+# QuantCoder v0.4
 
 QuantCoder is a  tool designed to streamline the process of searching for research articles, downloading PDFs, summarizing content, and generating QuantConnect Python algorithms based on the extracted data.
 
