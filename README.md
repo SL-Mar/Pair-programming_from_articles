@@ -1,6 +1,6 @@
-# QuantCLI
+# QuantCoder v1.0
 
-QuantCLI is a Command-Line Interface (CLI) tool designed to streamline the process of searching for research articles, downloading PDFs, summarizing content, and generating QuantConnect Python algorithms based on the extracted data.
+QuantCoder is a  tool designed to streamline the process of searching for research articles, downloading PDFs, summarizing content, and generating QuantConnect Python algorithms based on the extracted data.
 
 ## Features
 
