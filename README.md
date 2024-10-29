@@ -2,6 +2,8 @@
 
 QuantCoder is a  tool designed to streamline the process of searching for research articles, downloading PDFs, summarizing content, and generating QuantConnect Python algorithms based on the extracted data.
 
+For an explanation of the code, refer to article : https://medium.com/ai-advances/from-finance-papers-to-trading-algorithms-an-automated-approach-ccd2180ee306
+
 ## Features
 
 - **Search Articles**: Query the CrossRef API to find relevant journal articles.
