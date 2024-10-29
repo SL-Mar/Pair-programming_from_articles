@@ -25,7 +25,11 @@ To launch the interactive mode of **QuantCLI**, follow these steps:
 
    ```bash
    quantcli interactive
- 
+
+## Evolution
+
+Its workflow should be made agentic to enhance code accuracy, using the principles laid in this article :
+https://medium.com/towardsdev/dual-agent-chatbots-and-expert-systems-design-25e2cba434e9?sk=c947ad4fb868d599988c8070a94ffb8e
 
 ## License
 
